@@ -22,13 +22,13 @@ router.get('/analyzeComments', async (req, res) => {
     try {
       const youtubeRes = await youtube.commentThreads.list({
         part: "snippet",
-        videoId: "aUI96T7O2gQ",
+        videoId: "NqD0SMWmXbg",
         maxResults: 100
       });
   
       const comments = youtubeRes.data.items.map(item => item.snippet.topLevelComment.snippet.textDisplay);
       const analyzedComments = [];
-  
+      
       comments.forEach(comment => {
         const tokens = tokenizer.tokenize(comment);
         const sentiment = analyzer.getSentiment(tokens);
