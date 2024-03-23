@@ -188,7 +188,9 @@ app.post('/api/generateByImage',generateByImage)
     const response = result.response;
     console.log(response.text());
 
-      res.send(response.text())
+      res.status(200).json({
+        description:response.text()
+      })
   } catch (error) {
     console.log('response error', error);
 
