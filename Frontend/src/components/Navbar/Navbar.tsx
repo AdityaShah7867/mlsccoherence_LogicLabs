@@ -8,7 +8,7 @@ const Navbar = () => {
       <div className="flex items-center justify-between">
         <div className="flex shrink-0">
           <a aria-current="page" className="flex items-center" href="/">
-            <img className="h-7 w-auto" src="" alt='logo'/>
+            <img className="h-7 w-auto" src="https://st2.depositphotos.com/1065578/7533/i/450/depositphotos_75333451-stock-photo-abstract-geometric-company-logo.jpg" alt='logo'/>
             <p className="sr-only">Website Title</p>
           </a>
         </div>
