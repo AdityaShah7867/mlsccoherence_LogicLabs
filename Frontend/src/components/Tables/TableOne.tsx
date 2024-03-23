@@ -60,24 +60,10 @@ const TableOne = () => {
           </div>
           <div className="p-2.5 text-center xl:p-5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Visitors
+              Followers 
             </h5>
           </div>
-          <div className="p-2.5 text-center xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Revenues
-            </h5>
-          </div>
-          <div className="hidden p-2.5 text-center sm:block xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Sales
-            </h5>
-          </div>
-          <div className="hidden p-2.5 text-center sm:block xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Conversion
-            </h5>
-          </div>
+          
         </div>
 
         {brandData.map((brand, key) => (
@@ -102,7 +88,7 @@ const TableOne = () => {
               <p className="text-black dark:text-white">{brand.visitors}K</p>
             </div>
 
-            <div className="flex items-center justify-center p-2.5 xl:p-5">
+            {/* <div className="flex items-center justify-center p-2.5 xl:p-5">
               <p className="text-meta-3">${brand.revenues}</p>
             </div>
 
@@ -112,7 +98,7 @@ const TableOne = () => {
 
             <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
               <p className="text-meta-5">{brand.conversion}%</p>
-            </div>
+            </div> */}
           </div>
         ))}
       </div>
