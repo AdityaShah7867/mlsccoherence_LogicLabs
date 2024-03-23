@@ -1,17 +1,45 @@
+"use client"
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import png1 from "../../../assets/Mobile login.gif";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { Metadata } from "next";
+import axios from 'axios'
 // import DefaultLayout from "@/components/Layouts/DefaultLayout";
+// useRouter
+import { useRouter } from 'next/navigation'
+ 
 
-export const metadata: Metadata = {
-  title: "social media",
-  description: "This is Next.js Signin Page TailAdmin Dashboard Template",
-};
 
 const SignIn: React.FC = () => {
+
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const router = useRouter()
+ 
+ 
+ 
+
+  const handleSubmit=async(e:React.FormEvent)=>{
+    e.preventDefault()
+    
+    const response=await axios.post(`http://localhost:4000/api/user/login`,{
+        email:email,
+        password:password
+    })
+
+ 
+    if(response.status === 200){
+      alert("login successfully")
+      localStorage.setItem('token',response.data.token)
+      router.push('/', { scroll: false })
+    }else{
+      alert("login failed")
+    }
+}
+
+
   return (
     <div>
       {/* <Breadcrumb pageName="Sign In" /> */}
@@ -41,6 +69,8 @@ const SignIn: React.FC = () => {
                   <div className="relative">
                     <input
                       type="email"
+                      onChange={(e)=>setEmail(e.target.value)}
+                      value={email}
                       placeholder="Enter your email"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
@@ -71,6 +101,8 @@ const SignIn: React.FC = () => {
                   </label>
                   <div className="relative">
                     <input
+                      onChange={(e)=>setPassword(e.target.value)}
+                      value={password}
                       type="password"
                       placeholder="6+ Characters, 1 Capital letter"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-white outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -101,8 +133,8 @@ const SignIn: React.FC = () => {
                 </div>
 
                 <div className="mb-5">
-                  <input
-                    type="submit"
+                  <button
+                    onClick={handleSubmit}
                     value="Sign In"
                     className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
                   />
@@ -148,7 +180,7 @@ const SignIn: React.FC = () => {
                 <div className="mt-6 text-center">
                   <p>
                     Don’t have any account?{" "}
-                    <Link href="/auth/signup" className="text-primary">
+                    <Link href="/auth/signup" className="text-primary" >
                       Sign Up
                     </Link>
                   </p>
