@@ -64,8 +64,8 @@ const Settings = () => {
                           type="text"
                           name="fullName"
                           id="fullName"
-                          placeholder="Devid Jhon"
-                          defaultValue="Devid Jhon"
+                          placeholder="Aditya Shah"
+                          defaultValue="Aditya Shah"
                         />
                       </div>
                     </div>
@@ -82,8 +82,8 @@ const Settings = () => {
                         type="text"
                         name="phoneNumber"
                         id="phoneNumber"
-                        placeholder="+990 3343 7865"
-                        defaultValue="+990 3343 7865"
+                        placeholder="+91 7276069866"
+                        defaultValue="+91 7276069866"
                       />
                     </div>
                   </div>
@@ -126,8 +126,8 @@ const Settings = () => {
                         type="email"
                         name="emailAddress"
                         id="emailAddress"
-                        placeholder="devidjond45@gmail.com"
-                        defaultValue="devidjond45@gmail.com"
+                        placeholder="name@gmail.com"
+                        
                       />
                     </div>
                   </div>
@@ -229,7 +229,7 @@ const Settings = () => {
                   <div className="mb-4 flex items-center gap-3">
                     <div className="h-14 w-14 rounded-full">
                       <Image
-                        src={"/images/user/user-03.png"}
+                        src={"/images/user/uer-03.png"}
                         width={55}
                         height={55}
                         alt="User"
@@ -239,14 +239,7 @@ const Settings = () => {
                       <span className="mb-1.5 text-black dark:text-white">
                         Edit your photo
                       </span>
-                      <span className="flex gap-2.5">
-                        <button className="text-sm hover:text-primary">
-                          Delete
-                        </button>
-                        <button className="text-sm hover:text-primary">
-                          Update
-                        </button>
-                      </span>
+                      
                     </div>
                   </div>
 
