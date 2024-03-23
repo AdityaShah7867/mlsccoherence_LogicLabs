@@ -1,37 +1,27 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-<<<<<<< Updated upstream
-=======
-import png1 from "../../../assets/Mobile login.gif"
->>>>>>> Stashed changes
+import png1 from "../../../assets/Mobile login.gif";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { Metadata } from "next";
-import DefaultLayout from "@/components/Layouts/DefaultLayout";
+// import DefaultLayout from "@/components/Layouts/DefaultLayout";
 
 export const metadata: Metadata = {
-  title: "Next.js SignIn Page | TailAdmin - Next.js Dashboard Template",
+  title: "social media",
   description: "This is Next.js Signin Page TailAdmin Dashboard Template",
 };
 
 const SignIn: React.FC = () => {
   return (
-    <DefaultLayout>
-      <Breadcrumb pageName="Sign In" />
+    <div>
+      {/* <Breadcrumb pageName="Sign In" /> */}
 
-      <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div className="mt-24 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center">
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="px-26 py-17.5 text-center">
-              
-
               <span className="mt-15 inline-block">
-              <Image
-                  className=""
-                  src={png1}
-                  alt="Logo"
-                 
-                />
+                <Image className="" src={png1} alt="Logo" />
               </span>
             </div>
           </div>
@@ -168,7 +158,7 @@ const SignIn: React.FC = () => {
           </div>
         </div>
       </div>
-    </DefaultLayout>
+    </div>
   );
 };
 

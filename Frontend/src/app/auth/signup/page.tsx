@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import png1 from "../../../assets/Sign up.gif"
+import png1 from "../../../assets/Sign up.gif";
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 
@@ -14,8 +14,7 @@ export const metadata: Metadata = {
 const SignUp: React.FC = () => {
   return (
     <div>
-
-      <div className="rounded-sm border border-stroke min-h- mt-10 bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div className="min-h- mt-10 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center">
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="px-26 py-17.5 text-center">
@@ -227,7 +226,7 @@ const SignUp: React.FC = () => {
           </div>
         </div>
       </div>
-    </DefaultLayout>
+    </div>
   );
 };
 
