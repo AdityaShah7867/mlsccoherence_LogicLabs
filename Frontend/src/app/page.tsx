@@ -1,6 +1,8 @@
 import ECommerce from "@/components/Dashboard/SocialDash";
 import { Metadata } from "next";
-import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import {HeroScrollDemo } from "@/components/Land/Land";
+import { TypewriterEffectSmoothDemo } from '@/components/Typewriter/TypeWriter';
+import Navbar from "@/components/Navbar/Navbar";
 
 export const metadata: Metadata = {
   title:
@@ -10,10 +12,13 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <>
-      <DefaultLayout>
-        <ECommerce />
-      </DefaultLayout>
-    </>
+    <div className="bg-[#577089]">
+      <Navbar/>
+      <TypewriterEffectSmoothDemo/>
+      <div className="-mt-52">
+      <HeroScrollDemo />
+      </div>
+   
+    </div>
   );
 }
