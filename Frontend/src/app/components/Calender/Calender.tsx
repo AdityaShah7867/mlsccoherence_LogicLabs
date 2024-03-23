@@ -40,12 +40,12 @@ const MyCalendar: React.FC = () => {
 
   return (
     <div>
-      <button
+      {/* <button
         onClick={toggleCalendarVisibility}
         className="p-2 bg-blue-500 text-white mt-2 rounded-md mb-2"
       >
         {calendarVisible ? "Hide Calendar" : "Show Calendar"}
-      </button>
+      </button> */}
       {calendarVisible && (
         <div style={{ height: "500px" }}>
           <Calendar<MyEvent>
