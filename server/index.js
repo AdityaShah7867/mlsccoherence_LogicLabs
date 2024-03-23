@@ -123,7 +123,7 @@ const generate = async (req,res) => {
   const reWriteWithAI=async(req,res)=>{
     try {
         const prompt = req.body.text;
-        const result = await geminiModel.generateContent("correct the  following sentence:\n\n"+prompt);
+        const result = await geminiModel.generateContent("correct the following sentence:\n\n"+prompt);
         const response = result.response;
         console.log(response.text());
   
