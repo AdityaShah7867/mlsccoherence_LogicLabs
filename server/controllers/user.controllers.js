@@ -2,6 +2,7 @@ const { response } = require("express");
 const social = require("../social");
 const { User } = require("../models/user.models");
 const jwt=require('jsonwebtoken')
+require('dotenv').config()
 
 
 const getUserDetails=async(req,res)=>{
@@ -105,11 +106,12 @@ const registerUSer=async (req,res)=>{
 const longinUser=async(req,res)=>{
     const { email, password } = req.body;
     try {
-        const user
-            = await User.findOne({
-                email: email,
-                password: password
-            })
+        const user= await User.find({
+            email:email,
+        })
+
+        console.log(user)
+            
         if (!user) return res.status(400).json({ message: "User not found" });
         const token=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:'1h'})
 

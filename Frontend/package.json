@@ -12,13 +12,16 @@
     "apexcharts": "^3.45.2",
     "axios": "^1.6.8",
     "flatpickr": "^4.6.13",
+    "framer-motion": "^11.0.20",
     "jsvectormap": "^1.5.3",
     "moment": "^2.30.1",
     "next": "14.1.0",
     "react": "^18",
     "react-apexcharts": "^1.4.1",
     "react-big-calendar": "^1.11.2",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-toastify": "^10.0.5",
+    "tailwind-merge": "^2.2.2"
   },
   "devDependencies": {
     "@types/node": "^20",

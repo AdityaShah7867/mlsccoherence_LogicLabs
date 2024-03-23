@@ -4,7 +4,7 @@ const { validateToken } = require('../middleswares/user.middlewares')
 
 const router=require('express').Router()
 
-router.post('/create',validateToken,createPost)
+router.post('/create',createPost)
 router.get('/analytics',validateToken,analyticsData)
 
 module.exports=router

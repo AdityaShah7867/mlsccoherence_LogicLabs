@@ -1,16 +1,91 @@
+"use client"
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import Image from "next/image";
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import Link from "next/link";
 import React from "react";
+import axios from "axios";
 
-export const metadata: Metadata = {
-  title: "Next.js PostForm ",
-  description: "This is Post form",
-};
 
 const Post = () => {
+
+  const [post,setPost]=React.useState('')
+  const [caption,setCaption]=React.useState('')
+  const [captionLoadind,setCaptionLoading]=React.useState(false)
+  const [rewriteCaption,setRewriteCaption]=React.useState(false)
+
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post(
+        'http://localhost:4000/api/post/create',
+        {
+          postContent: post,
+          mediaUrls: ["https://img.ayrshare.com/012/gb.jpg"],
+          platforms: ["linkedin"]
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        }
+      );
+
+      console.log(response);
+
+      console.log('post', post);
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+  const generateCaption=async()=>{
+    setCaptionLoading(true)
+    const response=await axios.post('http://localhost:4000/api/generate',{
+      prompt:post
+    })
+    
+    console.log(response)
+
+    if(response.status===200){
+      setCaptionLoading(false)
+      console.log(response.data)
+      setPost(response.data.text)
+    }
+  }
+
+
+  const enhanceCaption=async()=>{
+    setRewriteCaption(true)
+    const response=await axios.post('http://localhost:4000/api/rewrite',{
+      prompt:post
+    })
+    
+    console.log(response)
+
+    if(response.status===200){
+      setRewriteCaption(false)
+      console.log(response.data)
+      setPost(response.data.text)
+    }
+  }
+
+  const captionByImage=async()=>{
+    const response=await axios.post('http://localhost:4000/api/generateByImage',{
+      prompt:post
+    })
+    
+    console.log(response)
+
+    if(response.status===200){
+      console.log(response.data)
+      setPost(response.data.caption)
+    }
+  }
+
   return (
     <DefaultLayout>
       <div className="mx-auto ">
@@ -32,6 +107,9 @@ const Post = () => {
                   </label>
                   <textarea
                     id="message"
+                    name="post"
+                    value={post}
+                    onChange={(e)=>setPost(e.target.value)}
                     rows={4}
                     className="text-gray-900 bg-gray-50 border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 block w-full rounded-lg border p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500 dark:text-white dark:focus:border-blue-500 dark:focus:ring-blue-500"
                     placeholder="Write your thoughts here..."
@@ -77,9 +155,11 @@ const Post = () => {
                   {/* sdada */}
                 </div>
               </div>
-              <div className="buttonss flex flex-wrap items-center justify-start gap-6">
+              <div onClick={generateCaption}  className="buttons flex flex-wrap items-center justify-start gap-6">
                 <div className="flex flex-wrap rounded-md bg-black p-2 text-white">
-                  <div>Generate Caption</div>
+                  <div>{
+                    captionLoadind?'Loading...':'Generate Caption'
+                    }</div>
                   <div>
                     <Image
                       src="/ai.png"
@@ -90,18 +170,25 @@ const Post = () => {
                   </div>
                 </div>
 
-                <div className="rounded-md bg-blue-500 p-2 text-white">
-                  Enhance Caption
+                <div onClick={enhanceCaption} className="rounded-md bg-blue-500 p-2 text-white">
+                 {
+                    rewriteCaption?'Loading...':'Enhance Caption'
+                 }
+                </div>
+
+                <div onClick={captionByImage} className="rounded-md bg-blue-500 p-2 text-white">
+                 {
+                    rewriteCaption?'Loading...':'Generate BY Image'
+                 }
                 </div>
               </div>
               <br />
               <hr className="mb-4" />
               <div className="text-left">
-                <p className="text-left">Post on Social Networks</p>
+                <p onClick={handleSubmit} className="text-left border border-black p-2 rounded-lg bg-blue-300">Post on Social Networks</p>
               </div>
               <div>
-                {/* edsfdfsfs */}
-
+              
                 <div className="mt-4 flex flex-wrap items-center justify-start gap-8"></div>
               </div>
             </div>
