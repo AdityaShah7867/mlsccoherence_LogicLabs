@@ -2,6 +2,9 @@ import { ApexOptions } from "apexcharts";
 import React, { useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
+
+
+
 const options: ApexOptions = {
   legend: {
     show: false,
@@ -84,18 +87,36 @@ const options: ApexOptions = {
   xaxis: {
     type: "category",
     categories: [
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "30",
     ],
     axisBorder: {
       show: false,
@@ -122,12 +143,16 @@ interface ChartOneState {
   }[];
 }
 
-const ChartOne: React.FC = () => {
+const ChartOne: React.FC = ({data}) => {
+
+  const views=data.videos.map(video=>parseInt(video.views));
+  let cat=data.videos.map(video=>video.title);
+
   const [state, setState] = useState<ChartOneState>({
     series: [
       {
         name: "Product One",
-        data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30, 45],
+        data: views,
       },
 
      

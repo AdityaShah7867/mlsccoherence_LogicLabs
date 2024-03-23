@@ -18,11 +18,12 @@ const youtube = google.youtube({
   auth: DEVELOPER_KEY
 });
 
-router.get('/analyzeComments', async (req, res) => {
+router.get('/analyzeComments/:videoID', async (req, res) => {
+    const videoID = req.params.videoID;
     try {
       const youtubeRes = await youtube.commentThreads.list({
         part: "snippet",
-        videoId: "NqD0SMWmXbg",
+        videoId: videoID,
         maxResults: 100
       });
   
@@ -32,6 +33,9 @@ router.get('/analyzeComments', async (req, res) => {
       comments.forEach(comment => {
         const tokens = tokenizer.tokenize(comment);
         const sentiment = analyzer.getSentiment(tokens);
+        if(sentiment === null){
+          sentiment = 0
+        }
         analyzedComments.push({ comment: comment, sentiment: sentiment });
       });
   
