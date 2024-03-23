@@ -39,11 +39,11 @@ const Page: React.FC = () => {
       const ctx = canvas.getContext('2d');
       if (ctx) {
         // Check if a Chart instance already exists
-        if (canvas?.chart) {
-          // If so, destroy the existing Chart instance
+        if (canvas.chart) {
+         
           canvas.chart.destroy();
         }
-        // Initialize the new Chart instance
+        
         canvas.chart = new Chart(ctx, {
           type: 'bar',
           data: {
