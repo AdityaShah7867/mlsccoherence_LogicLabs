@@ -4,7 +4,7 @@ import Image from "next/image";
 const brandData: BRAND[] = [
   {
     logo: "/images/brand/brand-01.svg",
-    name: "youtube",
+    name: "Youtube",
     visitors: 3.5,
     revenues: "5,768",
     sales: 590,
