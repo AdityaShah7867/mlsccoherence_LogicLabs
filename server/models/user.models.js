@@ -20,11 +20,11 @@ const UserSchema=new mongoose.Schema({
     locationCoordinates:{
         lat:{
             type:Number,
-            required:true
+           
         },
         long:{
             type:Number,
-            required:true
+           
         }
     },
 },{

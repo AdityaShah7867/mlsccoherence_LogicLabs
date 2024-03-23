@@ -5,6 +5,9 @@ const passport = require('passport');
 const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 const {Authorization,RedirectHandler}=require('./authHelper')
 const { GoogleGenerativeAI } = require('@google/generative-ai');
+const cors=require('cors')
+require('dotenv').config();
+const fs = require('fs');
 
 const app = express();
 
@@ -16,6 +19,7 @@ const youtubeDataRoutes=require('./controllers/youtubeData.controllers')
 const instagraDataRoutes=require('./controllers/instagram.controllers')
 
 app.use(express.json());
+app.use(cors())
 
 // app.use(session({
 //     secret: 'your_secret_key',
@@ -85,6 +89,10 @@ app.use('/api/youtube',youtubeRoutes)
 app.use('/youtubeData',youtubeDataRoutes)
 
 
+mongoose.connect(process.env.MONGO_URL).then(()=>{
+    console.log('Connected to MongoDB');
+})
+
 
 const PORT = process.env.PORT || 4000;
 
@@ -110,13 +118,17 @@ const geminiModel = googleAI.getGenerativeModel({
   geminiConfig,
 });
 const generate = async (req,res) => {
+    let prompt = req.body.prompt  
     try {
-      const prompt = 'Write a instagram caption for a photo of a sunset.';
+      
       const result = await geminiModel.generateContent(prompt);
       const response = result.response;
       console.log(response.text());
 
-        res.send(response.text())
+        res.send({
+          text: response.text(),
+      
+        })
     } catch (error) {
       console.log('response error', error);
 
@@ -127,8 +139,8 @@ const generate = async (req,res) => {
 
   const reWriteWithAI=async(req,res)=>{
     try {
-        const prompt = req.body.text;
-        const result = await geminiModel.generateContent("correct the following sentence:\n\n"+prompt);
+        const prompt = req.body.prompt;
+        const result = await geminiModel.generateContent("correct the following caption:\n\n"+prompt);
         const response = result.response;
         console.log(response.text());
   
@@ -140,6 +152,48 @@ const generate = async (req,res) => {
       }
   }
 
+  const genAI = new GoogleGenerativeAI(API_KEY);
+
+  const generateByImage=async(req,res)=>{
+   try {
+    const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
+
+    const prompt = "Write a caption for this with Hashtags?";
+    const image = {
+      inlineData: {
+        data: Buffer.from(fs.readFileSync("insta.png")).toString("base64"),
+        mimeType: "image/png",
+      },
+    };
+    
+    const result = await model.generateContent([prompt, image]);
+    res.status(200).json({
+      caption:result.response.text()
+    })
+   } catch (error) {
+    console.log('response error', error);
+
+      res.send('error')
+   }
+}
 
 app.post('/api/generate',generate)
 app.post('/api/rewrite',reWriteWithAI)
+app.post('/api/generateByImage',generateByImage)
+
+ const generateVideoDescription = async (req,res) => {
+  try {
+    const prompt = 'describe the video and what can be done better in this https://youtube.com/watch?v=NqD0SMWmXbg&t=6';
+    const result = await geminiModel.generateContent(prompt);
+    const response = result.response;
+    console.log(response.text());
+
+      res.send(response.text())
+  } catch (error) {
+    console.log('response error', error);
+
+      res.send('error')
+  }
+};
+
+app.post('/api/generateVideoDescription',generateVideoDescription)

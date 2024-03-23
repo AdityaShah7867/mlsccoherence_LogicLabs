@@ -1,17 +1,48 @@
+
+"use client"
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import png1 from "../../../assets/Sign up.gif";
 import { Metadata } from "next";
+import { useState } from "react";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify';
 
-export const metadata: Metadata = {
-  title: "Next.js SignUp Page | TailAdmin - Next.js Dashboard Template",
-  description: "This is Next.js SignUp Page TailAdmin Dashboard Template",
-  // other metadata
-};
+
 
 const SignUp: React.FC = () => {
+
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [retypePassword, setRetypePassword] = useState<string>("");
+
+
+  const handlesubmit=async()=>{
+
+    
+    if ( password === retypePassword){
+      const response=await axios.post('http://localhost:4000/api/user/register',{
+        name:name,
+        email:email,
+        password:password
+      })
+
+        toast.success('User Registered Successfully')
+      
+      console.log(response);
+    }else{
+      console.log("password not matched");
+      toast.error('Passwords do not')
+    }
+  }
+
+
+
+
+
   return (
     <div>
       <div className="min-h- mt-10 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -38,6 +69,10 @@ const SignUp: React.FC = () => {
                   </label>
                   <div className="relative">
                     <input
+                      onChange={(e)=>{
+                        setName(e.target.value);
+                      
+                      }}
                       type="text"
                       placeholder="Enter your full name"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -73,6 +108,11 @@ const SignUp: React.FC = () => {
                   </label>
                   <div className="relative">
                     <input
+                      onChange={(e)=>{
+                        setEmail(e.target.value);
+                      
+                      }}
+                      value={email}
                       type="email"
                       placeholder="Enter your email"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -104,6 +144,11 @@ const SignUp: React.FC = () => {
                   </label>
                   <div className="relative">
                     <input
+                    onChange={(e)=>{
+                      setPassword(e.target.value);
+                    
+                    
+                    }}
                       type="password"
                       placeholder="Enter your password"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -140,6 +185,12 @@ const SignUp: React.FC = () => {
                   <div className="relative">
                     <input
                       type="password"
+                      id="confirm_password"
+                      onChange={(e)=>{
+                        setRetypePassword(e.target.value);
+                      
+                      }}
+                      value={retypePassword}
                       placeholder="Re-enter your password"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
@@ -170,7 +221,7 @@ const SignUp: React.FC = () => {
 
                 <div className="mb-5">
                   <input
-                    type="submit"
+                  onClick={handlesubmit}
                     value="Create account"
                     className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
                   />

@@ -4,6 +4,7 @@ import {HeroScrollDemo } from "@/components/Land/Land";
 import { TypewriterEffectSmoothDemo } from '@/components/Typewriter/TypeWriter';
 import Navbar from "@/components/Navbar/Navbar";
 
+
 export const metadata: Metadata = {
   title:
     "Social Media Dashboard ",

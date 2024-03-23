@@ -5,6 +5,10 @@ import "@/css/satoshi.css";
 import "@/css/style.css";
 import React, { useEffect, useState } from "react";
 import Loader from "@/components/common/Loader";
+import { AuthProvider } from "@/context/authContext";
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function RootLayout({
   children,
@@ -22,11 +26,14 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+        {/* <ToastContainer > */}
       <body suppressHydrationWarning={true}>
         <div className="dark:bg-boxdark-2 dark:text-bodydark">
           {loading ? <Loader /> : children}
         </div>
-      </body>
+      </body>   
+      {/* </ToastContainer> */}
+   
     </html>
   );
 }
