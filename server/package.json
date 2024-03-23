@@ -10,8 +10,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.6.8",
+    "dotenv": "^16.4.5",
     "express": "^4.19.1",
+    "express-session": "^1.18.0",
+    "linkedin-api-client": "^0.3.0",
     "mongoose": "^8.2.3",
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.0",
+    "passport": "^0.7.0",
+    "passport-linkedin-oauth2": "^2.0.0",
+    "social-post-api": "^1.1.1"
   }
 }
