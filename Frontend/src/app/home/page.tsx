@@ -1,6 +1,6 @@
 import React from 'react';
 import StatusCard, { CardData } from '../components/Dashboard/StatusCard';
-
+import Calender from '../components/Calender/Calender';
 const Page: React.FC = () => {
   // Dummy data for cards
   const cardsData: CardData[] = [
@@ -33,6 +33,18 @@ const Page: React.FC = () => {
         {cardsData.map((data, index) => (
           <StatusCard key={index} title={data.title} description={data.description} actions={data.actions} />
         ))}
+        <div className='flex flex-wrap justify-between items-center'>
+          <div>
+              card 1
+          </div>
+          <div>
+              card 2
+          </div>
+          <div>
+            <Calender />
+          </div>
+        </div>
+       
       </div>
     </div>
   );

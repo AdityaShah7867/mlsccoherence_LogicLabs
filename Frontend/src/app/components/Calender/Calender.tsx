@@ -53,8 +53,8 @@ const MyCalendar: React.FC = () => {
             events={events}
             startAccessor="start"
             endAccessor="end"
-            className="mr-12"
-            style={{ height: 500 }}
+            className=""
+            style={{ height: 300, width: 300}}
             onSelectEvent={(event: MyEvent) => {
               console.log(event);
               alert(`You selected an event from the calendar.`);
