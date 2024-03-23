@@ -11,6 +11,9 @@ const app = express();
 const postRoutes = require('./routes/post.routes');
 const userRoutes = require('./routes/user.routes');
 const scheduleRoutes=require('./routes/schedule.routes')
+const youtubeRoutes=require('./controllers/youtube.controllers')
+const youtubeDataRoutes=require('./controllers/youtubeData.controllers')
+const instagraDataRoutes=require('./controllers/instagram.controllers')
 
 app.use(express.json());
 
@@ -78,6 +81,8 @@ app.get('/auth/linkedin/callback',(req,res)=>{
 app.use('/api/post', postRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/schedule',scheduleRoutes)
+app.use('/api/youtube',youtubeRoutes)
+app.use('/youtubeData',youtubeDataRoutes)
 
 
 

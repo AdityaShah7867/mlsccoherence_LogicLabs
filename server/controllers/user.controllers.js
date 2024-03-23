@@ -28,6 +28,32 @@ const historyData=async(req,res)=>{
 }
 
 
+const LinkdinALlData=async()=>{
+    const axios = require('axios');
+
+const options = {
+  method: 'GET',
+  url: 'https://linkedin-profiles1.p.rapidapi.com/extract',
+  params: {
+    url: 'https://ca.linkedin.com/in/sahilchalke',
+    html: '1'
+  },
+  headers: {
+    'X-RapidAPI-Key': '03efd5a285mshe7331c9d611b7f7p143fd2jsn5b7e913e6da3',
+    'X-RapidAPI-Host': 'linkedin-profiles1.p.rapidapi.com'
+  }
+};
+
+try {
+	const response = await axios.request(options);
+	console.log(response.data);
+
+    return response.data;
+} catch (error) {
+	console.error(error);
+}
+}
+
 const getUserInfoLinkedin = async (req, res) => {
     try {
         const user = await fetch('https://api.linkedin.com/v2/userinfo', {
@@ -37,13 +63,18 @@ const getUserInfoLinkedin = async (req, res) => {
         })
             .then(async(response) => {
                 const userData = await response.json();
-                console.log(userData); // Log the user data to the console
+                console.log(userData); 
                 return userData;
             })
             .catch((err) => console.log(err));
 
         if (!user) return res.status(400).json({ message: "User not found" });
-        res.status(200).json(user);
+
+        const userLinkedin = await LinkdinALlData();
+        res.status(200).json({
+            user:user,
+            userLinkedin:userLinkedin
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -93,10 +124,46 @@ const longinUser=async(req,res)=>{
     }
 }
 
+
+const getALLuser=async(req,res)=>{
+    try {
+        const user = await User.find();
+        if (!user) return res.status(400).json({ message: "User not found" });
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+const updateUSer=async(req,res)=>{
+    const { location,name,email,password } = req.body;
+    try {
+        const user = await User.findByIdAndUpdate(
+            req.user.id,
+            {
+                name: name,
+                email: email,
+                password: password,
+                location: location
+            }
+        )
+
+        if (!user) return res.status(400).json({ message: "User not found" });
+        res.status(200).json(user);
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+
 module.exports={
     getUserDetails,
     historyData,
     getUserInfoLinkedin,
     registerUSer,
-    longinUser
-}
+    longinUser,
+    getALLuser,
+    updateUSer
+};
+

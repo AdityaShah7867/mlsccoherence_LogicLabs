@@ -12,7 +12,21 @@ const UserSchema=new mongoose.Schema({
     password:{
         type:String,
         required:true
-    }
+    },
+    coins:{
+        type:Number,
+        default:0
+    },
+    locationCoordinates:{
+        lat:{
+            type:Number,
+            required:true
+        },
+        long:{
+            type:Number,
+            required:true
+        }
+    },
 },{
     timestamps:true
 })

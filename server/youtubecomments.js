@@ -16,7 +16,7 @@ const youtube = google.youtube({
 
 youtube.commentThreads.list({
   part: "snippet",
-  videoId: "ez2iYCvRz-w",
+  videoId: "aUI96T7O2gQ",
   maxResults: 100
 }, (err, res) => {
   if (err) {

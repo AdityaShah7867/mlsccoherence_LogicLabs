@@ -1,6 +1,9 @@
+const { Post } = require("../models/post.models");
 const social = require("../social");
+const User = require("../models/user.models");
 
 const createPost=async(req,res)=>{
+    const user=req.user.id
     const {postContent,platforms}=req.body
     try {
         const post = await social.post({
@@ -8,11 +11,25 @@ const createPost=async(req,res)=>{
             platforms: platforms,
             mediaUrls: ["https://img.ayrshare.com/012/gb.jpg"],
       }).catch(console.error);
+
+      const postMongo = await Post.create({
+        user:req.user.id,
+        title:postContent,
+        description:postContent,
+        date:new Date(),
+        time:new Date(),
+        platforms:platforms
+        
+    })
+
+
+    const user=await User.findById(req.user.id)
+
+    user.coins +=100;
+    console.log(postMongo)
       if (!post) return res.status(
         400
         ).json({ message: "Post not created" });
-
-
         res.status(200).json(post)
     } catch (error) {
         res.status(500).json({message:error.message})
