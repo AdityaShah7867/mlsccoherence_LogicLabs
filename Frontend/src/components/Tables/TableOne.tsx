@@ -63,16 +63,12 @@ const TableOne = () => {
               Followers
             </h5>
           </div>
-<<<<<<< Updated upstream
-          
-=======
 
           <div className="p-2.5 text-right xl:p-5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
               Connect
             </h5>
           </div>
->>>>>>> Stashed changes
         </div>
 
         {brandData.map((brand, key) => (
@@ -97,15 +93,12 @@ const TableOne = () => {
               <p className="text-black dark:text-white">{brand.visitors}K</p>
             </div>
 
-<<<<<<< Updated upstream
-=======
             <div className="cursor-pointerb flex items-center justify-end p-2.5 xl:p-5">
               <button className="rounded border border-blue-500 bg-transparent px-4 py-2 font-semibold text-blue-700 hover:border-transparent hover:bg-blue-500 hover:text-white">
                 Connect
               </button>
             </div>
 
->>>>>>> Stashed changes
             {/* <div className="flex items-center justify-center p-2.5 xl:p-5">
               <p className="text-meta-3">${brand.revenues}</p>
             </div>
