@@ -63,6 +63,12 @@ const TableOne = () => {
               Followers 
             </h5>
           </div>
+
+          <div className="p-2.5 text-right xl:p-5">
+            <h5 className="text-sm font-medium uppercase xsm:text-base">
+              Connect 
+            </h5>
+          </div>
           
         </div>
 
@@ -86,6 +92,10 @@ const TableOne = () => {
 
             <div className="flex items-center justify-center p-2.5 xl:p-5">
               <p className="text-black dark:text-white">{brand.visitors}K</p>
+            </div>
+
+            <div className="flex items-center justify-end cursor-pointerb p-2.5 xl:p-5">
+              <p className=" dark:text-white bg-blue-500 p-2 text-white rounded-md">Connect</p>
             </div>
 
             {/* <div className="flex items-center justify-center p-2.5 xl:p-5">
