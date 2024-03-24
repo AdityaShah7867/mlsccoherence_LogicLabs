@@ -25,7 +25,10 @@ const PieChart = ({ data }) => {
     },
   };
 
-  const series = [data.views, data.likes, data.comments];
+  const series = [Number(data.views), Number(data.likes), Number(data.comments)];
+  console.log('series', series);
+
+
 
   return (
     <Chart options={options} series={series} type="pie" width={options.chart.width} height={options.chart.height} />

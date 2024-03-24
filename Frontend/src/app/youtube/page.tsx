@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import Link from "next/link";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import ChartOne from "@/components/Charts/ChartOne";
 import data from '../jsoncrack.json'
@@ -10,25 +11,30 @@ import PieChart from "@/components/Charts/PieChart";
 
 const Page = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [transcript,setTranscript]=useState('')
+  const [transcript, setTranscript] = useState('');
+  const [currentVideoId, setCurrentVideoId] = useState<string | null>(null);
 
-  const handleButtonClick = () => { 
-
-  
+  const handleButtonClick = async (videoId: string) => {
+    setCurrentVideoId(videoId); // Set the current video ID when the button is clicked
     setIsModalOpen(true);
-
-    const response=axios.post('http://localhost:4000/api/generateVideoDescription')
-
-    if(response.status === 200){
-      setTranscript(response.data.text)
-    }else{  
-      setTranscript('Error in fetching transcript')
+    try {
+      const response = await axios.post('http://localhost:4000/api/generateVideoDescription');
+      if (response.status === 200) {
+        setTranscript(response.data.text);
+      } else {
+        setTranscript('Error in fetching transcript');
+      }
+    } catch (error) {
+      console.error('Error fetching transcript:', error);
+      setTranscript('Error in fetching transcript');
     }
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+
 
   const videos = data.videos;
   let maxViews = 0;
@@ -123,14 +129,14 @@ const Page = () => {
                     </div>
                   </div>
                   <div className="ml-auto">
+                  <Link href={`/youtube/${video.id}`}>
                     <button
-                      onClick={()=>{
-                        handleButtonClick(video.id)
-                      }}
+                     
                       className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
                     >
                      Get Transcript
                     </button>
+                    </Link>
                   </div>
                 </div>
               </div>
