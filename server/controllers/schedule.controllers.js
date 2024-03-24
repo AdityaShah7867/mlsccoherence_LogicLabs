@@ -2,22 +2,27 @@ const {Schedule}=require('../models/schedule.models')
 
 
 const createSchedule=async(req,res)=>{
-    const {user,title,description,date,time,platforms}=req.body
+    const {title,description,date,time,platforms}=req.body
     try{
         const schedule=await Schedule.create({
-            user,
+            user:'65ff1adcf7107e4b06c490c7',
             title,
-            description,
             date,
             time,
-            platforms
+            platforms:['linkedin']
         })
-        res.status(200).json(schedule)
+        res.status(200).json({
+            message:'Schedule created successfully',
+            schedule
+
+        })
     }
     catch(error){
         res.status(500).json({message:error.message})
     }
 }
+
+
 const getAllSchedules=async (
     req,
     res
