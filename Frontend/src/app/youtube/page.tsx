@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import Link from "next/link";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import ChartOne from "@/components/Charts/ChartOne";
 import data from '../jsoncrack.json'
@@ -32,6 +33,8 @@ const Page = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+
 
   const videos = data.videos;
   let maxViews = 0;
@@ -126,14 +129,14 @@ const Page = () => {
                     </div>
                   </div>
                   <div className="ml-auto">
+                  <Link href={`/youtube/${video.id}`}>
                     <button
-                      onClick={()=>{
-                        handleButtonClick(video.id)
-                      }}
+                     
                       className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
                     >
                      Get Transcript
                     </button>
+                    </Link>
                   </div>
                 </div>
               </div>
