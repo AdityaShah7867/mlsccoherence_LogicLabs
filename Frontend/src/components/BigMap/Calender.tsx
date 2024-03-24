@@ -1,57 +1,51 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import axios from "axios";
+import axios from 'axios'; // Import axios for making HTTP requests
 
 const MyCalendar = () => {
-  const [events, setEvents] = useState([]);
-  const [calendarVisible, setCalendarVisible] = useState(true);
-  const localizer = momentLocalizer(moment);
-
-  const getAllEvents = async () => {
-    try {
-      const res = await axios.get(`${process.env.REACT_APP_API_HOST}/api/v1/events/get`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("authtoken")}`,
-        },
-      });
-      setEvents(res.data.events);
-      console.log(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [events, setEvents] = useState([]); // Initialize events state as an empty array
 
   useEffect(() => {
-    getAllEvents();
-  }, []);
+    // Use useEffect to fetch data when component mounts
+    const getData = async () => {
+      try {
+        const response = await axios.get('http://localhost:4000/api/schedule/getAll');
+        // Extract events data from response
+        const eventData = response.data.map(item => ({
+          id: item._id,
+          title: item.title,
+          start: new Date(item.date),
+          end: new Date(item.date), // Assuming events are single-day, so start and end are the same
+          color: "#FF5722", // Example color
+        }));
+        setEvents(eventData); // Update events state with fetched data
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-  const toggleCalendarVisibility = () => {
-    setCalendarVisible((prevVisible) => !prevVisible);
-  };
+    getData(); // Call the function to fetch data
+  }, []); // Empty dependency array to ensure useEffect runs only once
+
+  const localizer = momentLocalizer(moment);
 
   return (
-    <div>
-     
-      {calendarVisible && (
-        <div style={{ height: "500px" }}>
-          <Calendar
-            localizer={localizer}
-            events={events}
-            startAccessor="start"
-            endAccessor="end"
-            className="mr-12"
-            style={{ height: 500 }}
-            onSelectEvent={(event) => {
-              console.log(event);
-              alert(`You selected an event from the calendar.`);
-            }}
-          />
-        </div>
-      )}
+    <div style={{ height: "500px" }}>
+      <Calendar
+        localizer={localizer}
+        events={events}
+        startAccessor="start"
+        endAccessor="end"
+        className="mr-12"
+        style={{ height: 500 }}
+        onSelectEvent={(event) => {
+          console.log(event);
+          alert(`You selected "${event.title}" from the calendar.`);
+        }}
+      />
     </div>
   );
 };

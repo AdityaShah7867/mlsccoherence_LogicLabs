@@ -12,8 +12,14 @@ const Post = () => {
 
   const [post,setPost]=React.useState('')
   const [caption,setCaption]=React.useState('')
-  const [captionLoadind,setCaptionLoading]=React.useState(false)
+  const [captionLoading,setCaptionLoading]=React.useState(false)
   const [rewriteCaption,setRewriteCaption]=React.useState(false)
+  const [date,setDate]=React.useState('')
+  const [time,setTime]=React.useState('')
+
+
+
+  
 
   const handleSubmit = async () => {
     try {
@@ -87,15 +93,13 @@ const Post = () => {
   }
 
   return (
-    <DefaultLayout>
+       <DefaultLayout>
       <div className="mx-auto ">
         <Breadcrumb pageName="Profile" />
-
         <div className="m-2 p-2 text-black font-sans bg-white">
           <div className=" font-sans  p-4">
             <h1 className="font-bold">SEND / SCHEDULE A POST</h1>
             <p>Post on multiple Platforms at once!</p>
-            {/* <hr className="mt-4" /> */}
             <div>
               <div className="flex flex-wrap items-center justify-center">
                 <div className="mb-4 w-full lg:mb-0 lg:w-2/3">
@@ -109,7 +113,7 @@ const Post = () => {
                     id="message"
                     name="post"
                     value={post}
-                    onChange={(e)=>setPost(e.target.value)}
+                    onChange={(e) => setPost(e.target.value)}
                     rows={4}
                     className="text-gray-900 bg-gray-50 border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 block w-full rounded-lg border p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500 dark:text-white dark:focus:border-blue-500 dark:focus:ring-blue-500"
                     placeholder="Write your thoughts here..."
@@ -117,49 +121,33 @@ const Post = () => {
                   />
                 </div>
                 <div className="w-full lg:w-1/3">
-                  {/* fadsda */}
                   <div className="extraOutline mx-auto w-full max-w-lg rounded-lg bg-white p-4">
                     <div className="file_upload border-gray-300 relative rounded-lg border-4 border-dotted p-5">
-                      <svg
-                        className="mx-auto mb-4 w-24 text-indigo-500"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                      <label htmlFor="fileInput">
+                        <input
+                          // onChange={handleFileChange}
+                          id="fileInput"
+                          className="absolute inset-0 block w-full cursor-pointer text-sm opacity-0"
+                          type="file"
+                          multiple
                         />
-                      </svg>
-                      <div className="input_field mx-auto flex flex-col text-center">
-                        <label htmlFor="fileInput">
-                          <input
-                            id="fileInput"
-                            className="absolute inset-0 block w-full cursor-pointer text-sm opacity-0"
-                            type="file"
-                            multiple
-                          />
-                          <div className="text border-gray-300 cursor-pointer rounded border bg-indigo-600 p-1 px-3 font-semibold text-white hover:bg-indigo-500">
-                            Select
-                          </div>
-                        </label>
-                        <div className="title mt-2 uppercase text-indigo-500">
-                          or drop files here
+                        <div className="text border-gray-300 cursor-pointer rounded border bg-indigo-600 p-1 px-3 font-semibold text-white hover:bg-indigo-500">
+                          Select
                         </div>
+                      </label>
+                      <div className="title mt-2 uppercase text-indigo-500">
+                        or drop files here
                       </div>
                     </div>
                   </div>
-                  {/* sdada */}
                 </div>
               </div>
-              <div onClick={generateCaption}  className="buttons flex flex-wrap items-center justify-start gap-6">
+              <div
+                onClick={generateCaption}
+                className="buttons flex flex-wrap items-center justify-start gap-6"
+              >
                 <div className="flex flex-wrap rounded-md bg-black p-2 text-white">
-                  <div>{
-                    captionLoadind?'Loading...':'Generate Caption'
-                    }</div>
+                  <div>{captionLoading ? "Loading..." : "Generate Caption"}</div>
                   <div>
                     <Image
                       src="/ai.png"
@@ -169,26 +157,30 @@ const Post = () => {
                     />
                   </div>
                 </div>
-
-                <div onClick={enhanceCaption} className="rounded-md bg-blue-500 p-2 text-white">
-                 {
-                    rewriteCaption?'Loading...':'Enhance Caption'
-                 }
+                <div
+                  onClick={enhanceCaption}
+                  className="rounded-md bg-blue-500 p-2 text-white"
+                >
+                  {rewriteCaption ? "Loading..." : "Enhance Caption"}
                 </div>
-
-                <div onClick={captionByImage} className="rounded-md bg-blue-500 p-2 text-white">
-                 {
-                    rewriteCaption?'Loading...':'Generate BY Image'
-                 }
+                <div
+                  onClick={captionByImage}
+                  className="rounded-md bg-blue-500 p-2 text-white"
+                >
+                  {rewriteCaption ? "Loading..." : "Generate BY Image"}
                 </div>
               </div>
               <br />
               <hr className="mb-4" />
               <div className="text-left">
-                <p onClick={handleSubmit} className="text-left border border-black p-2 rounded-lg bg-blue-300">Post on Social Networks</p>
+                <p
+                  onClick={handleSubmit}
+                  className="text-left border border-black p-2 rounded-lg bg-blue-300"
+                >
+                  Post on Social Networks
+                </p>
               </div>
               <div>
-              
                 <div className="mt-4 flex flex-wrap items-center justify-start gap-8"></div>
               </div>
             </div>

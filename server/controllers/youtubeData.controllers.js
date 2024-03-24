@@ -3,14 +3,14 @@ const session = require('express-session');
 const { OAuth2Client } = require('google-auth-library');
 const { google } = require('googleapis');
 const { content } = require('googleapis/build/src/apis/content');
+const { YoutubeProfile } = require('../models/userData.models');
 const router = express.Router()
 
 const app = express();
 
-const CLIENT_ID = '164586149788-rlpoupm2q9r4mfu6ek7af45burv12s98.apps.googleusercontent.com';
-const CLIENT_SECRET = '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';
+const CLIENT_ID = '233781037993-1maeeu84dqpsdhotetjeeqq0mf7phcmo.apps.googleusercontent.com';
+const CLIENT_SECRET = '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';
 const REDIRECT_URL = 'http://localhost:4000/youtubeData/api/v1/auth/google/callback';
-
 // const apiKey = 'AIzaSyCjR6nPmf0nvgdT-VwTZmcLLX6PwG9IxBI'; 
 
 const oAuth2Client = new OAuth2Client(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
@@ -27,8 +27,11 @@ router.get('/', (req, res) => {
             'https://www.googleapis.com/auth/youtube', // Add other necessary scopes here
         ].join(' '), // Join scopes into a single string
     });
-    res.redirect(authUrl);
+    res.json({
+        authUrl: authUrl,
+    });
 });
+
 
 
 router.get('/api/v1/auth/google/callback', async (req, res) => {
@@ -49,6 +52,7 @@ router.get('/api/v1/auth/google/callback', async (req, res) => {
 router.get('/profile', async (req, res) => {
     try {
         const { tokens } = req.session;
+        console.log('tokens',tokens)
         if (!tokens) {
             res.redirect('/');
             return;
@@ -100,6 +104,16 @@ router.get('/profile', async (req, res) => {
                 uploadedVideoDate: video.snippet.publishedAt
             };
         }));
+
+    const data=await  YoutubeProfile.create({
+        channelTitle,
+        channelDescription,
+        channelStatistics,
+        videos: videosWithDetails
+    
+    })
+
+    console.log('data',data)
 
         res.json({
             channelTitle,
