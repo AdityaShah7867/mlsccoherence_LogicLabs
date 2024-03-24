@@ -9,10 +9,12 @@ import { AuthProvider } from "@/context/authContext";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Chatbot from "./chatbot/page";
+
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: Readonly<{ 
   children: React.ReactNode;
 }>) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -29,6 +31,7 @@ export default function RootLayout({
         {/* <ToastContainer > */}
       <body suppressHydrationWarning={true}>
         <div className="dark:bg-boxdark-2 dark:text-bodydark">
+          <Chatbot />
           {loading ? <Loader /> : children}
         </div>
       </body>   
