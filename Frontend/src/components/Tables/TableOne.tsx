@@ -1,10 +1,11 @@
 import { BRAND } from "@/types/brand";
 import Image from "next/image";
+import axios from "axios";
 
 const brandData: BRAND[] = [
   {
     logo: "/images/brand/brand-01.svg",
-    name: "Google",
+    name: "youtube",
     visitors: 3.5,
     revenues: "5,768",
     sales: 590,
@@ -43,6 +44,13 @@ const brandData: BRAND[] = [
     conversion: 4.2,
   },
 ];
+
+const handleConnect=async(brand:string)=>{
+  if(brand === 'youtube'){
+    const response=await axios.get('http://localhost:4000/youtubeData')
+    window.open(response.data.authUrl)
+}
+}
 
 const TableOne = () => {
   return (
@@ -95,7 +103,9 @@ const TableOne = () => {
             </div>
 
             <div className="flex items-center justify-end cursor-pointerb p-2.5 xl:p-5">
-              <p className=" dark:text-white bg-blue-500 p-2 text-white rounded-md">Connect</p>
+              <p onClick={()=>{
+                handleConnect(brand.name)
+              }} className=" dark:text-white bg-blue-500 p-2 text-white rounded-md">Connect</p>
             </div>
 
             {/* <div className="flex items-center justify-center p-2.5 xl:p-5">

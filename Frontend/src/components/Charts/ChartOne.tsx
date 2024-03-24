@@ -145,8 +145,8 @@ interface ChartOneState {
 
 const ChartOne: React.FC = ({data}) => {
 
-  const views=data.videos.map(video=>parseInt(video.views));
-  let cat=data.videos.map(video=>video.title);
+  const views=data?.videos.map(video=>parseInt(video.views));
+  let cat=data?.videos.map(video=>video.title);
 
   const [state, setState] = useState<ChartOneState>({
     series: [

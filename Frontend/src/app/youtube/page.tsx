@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import ChartOne from "@/components/Charts/ChartOne";
@@ -56,9 +56,32 @@ const Page = () => {
   console.log("Peak Video:");
   console.log(peakVideo);
 
+  const [predication,setPrediction]=useState({})
 
 
+  const fetchData=async()=>{
+    const response=await axios.get('http://localhost:4000/youtubeData/profile')
+    console.log(response.data);
+    setPrediction(predication)
+  }
+
+  useEffect(()=>{
+    fetchData();
+  },[])
+
+
+  const getPrediction=async()=>{
+    const response=await axios.get('http://localhost:4000/api/predict')
+    console.log(response.data);
+    setPrediction(response.data)
+    
+  }
+
+  useEffect(()=>{
+    getPrediction();
+  },[])
   
+
 
   return (
     <DefaultLayout>
@@ -91,6 +114,27 @@ const Page = () => {
                   Total Videos
                 </div>
               </div>
+             
+              <div>
+                {/* show the predictaed data */}
+
+                
+              </div>
+
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-6">
+                <div className="m-2 rounded-lg bg-purple-200 p-2 text-xl text-purple-900">
+                  {predication.predictedLikes}
+                  <br />
+                  Predicted Likes(per video)
+                    </div>
+
+                <div className="m-2 rounded-lg bg-sky-100 p-2 text-xl text-sky-900">
+                  {predication?.predictedViews}
+                  <br />
+                 Predicted Views(per video)
+
+                    </div>
+                    </div>
             </div>
           </div>
           <div className="w-full  md:w-2/3">

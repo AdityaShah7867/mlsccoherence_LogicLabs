@@ -8,6 +8,9 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 const cors=require('cors')
 require('dotenv').config();
 const fs = require('fs');
+const jsonData = fs.readFileSync('jsoncrack.json');
+const data = JSON.parse(jsonData);
+
 
 const app = express();
 
@@ -199,3 +202,112 @@ app.post('/api/generateByImage',generateByImage)
 };
 
 app.post('/api/generateVideoDescription',generateVideoDescription)
+
+
+
+
+app.get('/api/predict', (req, res) => {
+  const videos = data.videos;
+
+  let totalLikes = 0;
+  let totalViews = 0;
+  videos.forEach(video => {
+    totalLikes += parseInt(video.likes);
+    totalViews += parseInt(video.views);
+  });
+  const meanLikes = totalLikes / videos.length;
+  const meanViews = totalViews / videos.length;
+
+  function linearRegression(features, target) {
+    const meanFeatures = features.reduce((acc, val) => acc + val, 0) / features.length;
+    const meanTarget = target.reduce((acc, val) => acc + val, 0) / target.length;
+
+    const numerator = features.reduce((acc, feature, i) => acc + (feature - meanFeatures) * (target[i] - meanTarget), 0);
+    const denominator = features.reduce((acc, feature) => acc + Math.pow(feature - meanFeatures, 2), 0);
+
+    const slope = numerator / denominator;
+    const intercept = meanTarget - slope * meanFeatures;
+
+    return [slope, intercept];
+  }
+
+  const likesFeatures = videos.map(video => parseInt(video.likes));
+  const likesTarget = videos.map(video => parseInt(video.likes));
+  const [likesSlope, likesIntercept] = linearRegression(likesFeatures, likesTarget);
+  const upcomingVideoLikes = meanLikes;
+  const predictedLikes = likesSlope * upcomingVideoLikes + likesIntercept;
+
+  const viewsFeatures = videos.map(video => parseInt(video.views));
+  const viewsTarget = videos.map(video => parseInt(video.views));
+  const [viewsSlope, viewsIntercept] = linearRegression(viewsFeatures, viewsTarget);
+  const upcomingVideoViews = meanViews;
+  const predictedViews = viewsSlope * upcomingVideoViews + viewsIntercept;
+
+  res.json({
+    predictedLikes,
+    predictedViews
+  });
+});
+
+
+const axios = require('axios');
+
+
+const fetchTrendingVideos = async (req,res) => {
+    const apiKey = 'AIzaSyAUqLy-ES4rJY-MsTeF_PFyAdXjk1pU498';
+    const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&maxResults=50&key=${apiKey}`;
+
+    try {
+        const response = await axios.get(apiUrl);
+        const videos = response.data.items;
+
+        // Extract hashtags from video titles, descriptions, or tags
+        const hashtags = extractHashtagsFromVideos(videos);
+        
+        // Process and display trending hashtags
+
+
+        res.json({
+            hashtags
+
+        });
+    } catch (error) {
+        console.error('Error fetching trending videos:', error);
+    }
+};
+
+
+
+const extractHashtagsFromVideos = (videos) => {
+    let hashtags = [];
+
+    videos.forEach(video => {
+        const title = video.snippet.title;
+        const description = video.snippet.description;
+        const tags = video.snippet.tags || [];
+
+        // Extract hashtags from title
+        const titleHashtags = extractHashtagsFromString(title);
+        hashtags.push(...titleHashtags);
+
+        // Extract hashtags from description
+        const descriptionHashtags = extractHashtagsFromString(description);
+        hashtags.push(...descriptionHashtags);
+
+        // Extract hashtags from tags
+        hashtags.push(...tags.filter(tag => tag.startsWith('#')));
+    });
+
+    return hashtags;
+};
+
+// Function to extract hashtags from a string
+const extractHashtagsFromString = (text) => {
+    const hashtagRegex = /#[^\s#]+/g;
+    return text.match(hashtagRegex) || [];
+};
+
+
+fetchTrendingVideos();
+
+app.get('/getTrendingHastags',fetchTrendingVideos)
