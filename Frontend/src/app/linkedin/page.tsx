@@ -41,7 +41,7 @@ const Page = () => {
             headers: {
               "content-type": "application/json",
               "X-RapidAPI-Key":
-                "5c7c9aa9famsh59c0c1ec2fda29fp15dce6jsn5870bcca0bf1",
+                "2031735695msh7151752500c6a7fp14ff07jsna383827c8125",
               "X-RapidAPI-Host": "linkedin-data-scraper.p.rapidapi.com",
             },
           },

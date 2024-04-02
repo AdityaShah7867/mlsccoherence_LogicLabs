@@ -149,12 +149,7 @@ const Post = () => {
                 <div className="flex flex-wrap rounded-md bg-black p-2 text-white">
                   <div>{captionLoading ? "Loading..." : "Generate Caption"}</div>
                   <div>
-                    <Image
-                      src="/ai.png"
-                      width={40}
-                      height={40}
-                      alt="Picture of the author"
-                    />
+                    
                   </div>
                 </div>
                 <div

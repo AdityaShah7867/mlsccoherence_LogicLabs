@@ -149,12 +149,16 @@ const Page = () => {
               </div>
             </div>
 
-            {
-              data.videos.map((video)=>(
-                <div className="mt-4 rounded-lg bg-white">
-                <div className="flex flex-wrap items-center gap-4 p-2">
-                  <div>
-                    <div className="flex">
+            {data.videos.map((video) => (
+              <div className="mt-4 rounded-lg bg-white">
+                <div className="flex">
+                  {/* Left side */}
+                  <div className="w-1/2 bg-white p-4 shadow-md">
+                    <PieChart data={video} />
+                  </div>
+                  {/* Right side */}
+                  <div className="w-1/2 bg-white p-4 shadow-md">
+                    <div className="">
                       <iframe
                         src={`https://www.youtube.com/embed/${video.id}?si=bnjb1GruB596tAbV`}
                         frameBorder={0}
@@ -162,18 +166,15 @@ const Page = () => {
                         className="mt-4 rounded-lg"
                       />
                     </div>
-                <div className="p-2 border-black border mt-10 rounded-2xl">
-                <PieChart  data={video}/>
-                  </div>
-                  </div>
-                  <div className="mt-8">
-                    <div>Title : {video.title}</div>
-                    <div>
-                    Views:{video.views}  &nbsp; &nbsp;Likes: {video.likes} &nbsp; &nbsp; Comments: {video.comments}
+
+                    <div className="mt-8 ">
+                      <div > Title : {video.title}</div>
+                      <div>
+                        Views:{video.views} &nbsp; &nbsp;Likes: {video.likes}{" "}
+                        &nbsp; &nbsp; Comments: {video.comments}
+                      </div>
                     </div>
-                  </div>
-                  <div className="ml-auto">
-                  <Link href={`/youtube/${video.id}`}>
+                    <Link href={`/youtube/${video.id}`}>
                     <button
                      
                       className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
@@ -184,8 +185,7 @@ const Page = () => {
                   </div>
                 </div>
               </div>
-              ))
-            }
+            ))}'
           </div>
         </div>
       </div>
